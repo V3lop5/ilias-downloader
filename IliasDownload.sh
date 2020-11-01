@@ -115,6 +115,24 @@ function fetch_folder {
 		local CONTENT_PAGE=`ilias_request "goto_${ILIAS_PREFIX}_$1.html"`
 	fi
 	
+    
+	# Folders
+	local ITEMS=`echo "$CONTENT_PAGE" | do_grep "<h4 class=\"il_ContainerItemTitle\"><a href=\"${ILIAS_URL}\Kgoto_${ILIAS_PREFIX}_fold_[0-9]*.html"`
+	
+	for folder in $ITEMS ; do
+		local FOLDER_NAME=`echo "$CONTENT_PAGE" | do_grep "<h4 class=\"il_ContainerItemTitle\"><a href=\"${ILIAS_URL}${folder}\" class=\"il_ContainerItemTitle\"[^>]*>\K[^<]*"`
+		
+		# Replace / character
+		local FOLDER_NAME=`echo "${FOLDER_NAME//\//-}" | head -1`
+		echo "Entering folder $FOLDER_NAME"
+		local FOLD_NUM=`echo "$folder" | do_grep "fold_\K[0-9]*"`
+		if [ ! -e "$2/$FOLDER_NAME" ] ; then
+			mkdir "$2/$FOLDER_NAME"
+		fi
+		fetch_folder "$FOLD_NUM" "$2/$FOLDER_NAME" 
+	done
+    
+    
 	# Files
 	local ITEMS=`echo $CONTENT_PAGE | do_grep "<h4 class=\"il_ContainerItemTitle\"><a href=\"${ILIAS_URL}\Kgoto_${ILIAS_PREFIX}_file_[0-9]*_download.html"`
 	
@@ -158,21 +176,6 @@ function fetch_folder {
 		fi
 	done
 	
-	# Folders
-	local ITEMS=`echo "$CONTENT_PAGE" | do_grep "<h4 class=\"il_ContainerItemTitle\"><a href=\"${ILIAS_URL}\Kgoto_${ILIAS_PREFIX}_fold_[0-9]*.html"`
-	
-	for folder in $ITEMS ; do
-		local FOLDER_NAME=`echo "$CONTENT_PAGE" | do_grep "<h4 class=\"il_ContainerItemTitle\"><a href=\"${ILIAS_URL}${folder}\" class=\"il_ContainerItemTitle\"[^>]*>\K[^<]*"`
-		
-		# Replace / character
-		local FOLDER_NAME=${FOLDER_NAME//\//-}
-		echo "Entering folder $FOLDER_NAME"
-		local FOLD_NUM=`echo "$folder" | do_grep "fold_\K[0-9]*"`
-		if [ ! -e "$2/$FOLDER_NAME" ] ; then
-			mkdir "$2/$FOLDER_NAME"
-		fi
-		fetch_folder "$FOLD_NUM" "$2/$FOLDER_NAME"
-	done
 }
 
 function print_stat() {
