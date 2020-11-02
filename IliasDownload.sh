@@ -31,6 +31,9 @@ ILIAS_LOGIN_GET="login.php?client_id=elearning&lang=de"
 ILIAS_HOME="ilias.php?baseClass=ilPersonalDesktopGUI&cmd=jumpToSelectedItems"
 ILIAS_LOGOUT="logout.php?lang=de"
 
+# Prefix for Übungen 
+EXC_FOLDER_PREFIX="exc "
+
 # DON'T TOUCH FROM HERE ON
 
 ILIAS_DL_COUNT=0
@@ -55,7 +58,7 @@ do_grep() {
 }
 
 ilias_request() {
-	curl -s -L -b $COOKIE_PATH -c $COOKIE_PATH $2 $ILIAS_URL$1
+	curl -s -L -b "$COOKIE_PATH" -c "$COOKIE_PATH" $2 "$ILIAS_URL$1"
 }
 
 do_login() {
@@ -93,6 +96,73 @@ function do_logout {
 
 function get_filename {
 	ilias_request "$1" "-I" | do_grep "Content-Description: \K(.*)" | tr -cd '[:print:]'
+}
+
+
+function fetch_exc {
+	if [ ! -d "$2" ] ; then
+		echo "$2 is not a directory!"
+		return
+	fi
+	cd "$2"
+	if [ ! -f "$HISTORY_FILE" ] ; then
+		touch "$HISTORY_FILE"
+	fi
+	local HISTORY_CONTENT=`cat "$HISTORY_FILE"`
+	
+	echo "Fetching exc $1 to $2"
+
+	local CONTENT_PAGE=`ilias_request "ilias.php?ref_id=$1&target=$1&cmd=showOverview&cmdClass=ilobjexercisegui&cmdNode=b8:md&baseClass=ilexercisehandlergui"`
+    
+    # Fetch all Download Buttons from this page
+	local ITEMS=`echo "$CONTENT_PAGE" | do_grep "<a href=\"\K[^\"]*(?=\">Download)" | sed -e 's/\&amp\;/\&/g'` 
+        
+    echo "$ITEMS"
+    
+    for file in $ITEMS ; do
+		local DO_DOWNLOAD=1
+        # TODO Die Files haben keine Nummer, sondern nur einen kryptischen Namen
+		#local NUMBER=`echo "${file//\">Download//}" | do_grep "[0-9]*"`
+		#echo -n "[$NUMBER] "
+        echo -n " Check file .. "
+		echo "$HISTORY_CONTENT" | grep "$file" > /dev/null
+		if [ $? -eq 0 ] ; then
+			local ITEM=`echo $CONTENT_PAGE | do_grep "<h4 class=\"il_ContainerItemTitle\"><a href=\"${ILIAS_URL}${file}.*<div style=\"clear:both;\"></div>"`
+			echo "$ITEM" | grep "geändert" > /dev/null
+			if [ $? -eq 0 ] ; then
+				local FILENAME=`get_filename "$file"`
+				echo -n "$FILENAME changed "
+				local PART_NAME="${FILENAME%.*}"
+				local PART_EXT="${FILENAME##*.}"
+				local PART_DATE=`date +%Y%m%d-%H%M%S`
+				mv "$FILENAME" "${PART_NAME}.${PART_DATE}.${PART_EXT}"
+			else
+				echo "exists"
+				((ILIAS_IGN_COUNT++))
+				DO_DOWNLOAD=0
+			fi
+		fi
+		if [ $DO_DOWNLOAD -eq 1 ] ; then
+			# TODO
+            #local FILENAME=`get_filename "$file"`
+			local FILENAME=`echo $file | do_grep "&file=\K(?=&)"`
+			echo -n "$FILENAME downloading... "
+			
+			ilias_request "$file" "-O -J"
+			local RESULT=$?
+			if [ $RESULT -eq 0 ] ; then
+				echo "$file" >> "$HISTORY_FILE"
+				((ILIAS_DL_COUNT++))
+				echo "done"
+				ILIAS_DL_NAMES="${ILIAS_DL_NAMES} - ${FILENAME}
+"
+			else
+				echo "failed: $RESULT"
+				((ILIAS_FAIL_COUNT++))
+			fi
+		fi
+	done
+    
 }
 
 function fetch_folder {
@@ -175,6 +245,26 @@ function fetch_folder {
 			fi
 		fi
 	done
+    
+    
+    # Übungen
+    
+	local ITEMS=`echo $CONTENT_PAGE | do_grep "<h4 class=\"il_ContainerItemTitle\"><a href=\"${ILIAS_URL}\Kgoto_${ILIAS_PREFIX}_exc_[0-9]*.html"`
+	
+	for exc in $ITEMS ; do
+		local EXC_NAME=`echo "$CONTENT_PAGE" | do_grep "<h4 class=\"il_ContainerItemTitle\"><a href=\"${ILIAS_URL}${exc}\" class=\"il_ContainerItemTitle\"[^>]*>\K[^<]*"`
+		
+		# Replace / character
+		local EXC_NAME=${EXC_NAME//\//-}
+		echo "Entering exc $EXC_NAME"
+		local EXC_NUM=`echo "$exc" | do_grep "exc_\K[0-9]*"`
+		if [ ! -e "$2/$EXC_FOLDER_PREFIX$EXC_NAME" ] ; then
+			mkdir "$2/$EXC_FOLDER_PREFIX$EXC_NAME"
+		fi
+		fetch_exc "$EXC_NUM" "$2/$EXC_FOLDER_PREFIX$EXC_NAME" 
+	done
+    
+	wait
 	
 }
 
