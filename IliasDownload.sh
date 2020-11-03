@@ -116,51 +116,44 @@ function fetch_exc {
     
     # Fetch all Download Buttons from this page
 	local ITEMS=`echo "$CONTENT_PAGE" | do_grep "<a href=\"\K[^\"]*(?=\">Download)" | sed -e 's/\&amp\;/\&/g'` 
-        
-    echo "$ITEMS"
     
     for file in $ITEMS ; do
 		local DO_DOWNLOAD=1
-        # TODO Die Files haben keine Nummer, sondern nur einen kryptischen Namen
-		#local NUMBER=`echo "${file//\">Download//}" | do_grep "[0-9]*"`
-		#echo -n "[$NUMBER] "
-        echo -n " Check file .. "
+        local FILENAME=`echo $file | do_grep "&file=\K(?=&)"`
+        local ECHO_MESSAGE="[$EXC_FOLDER_PREFIX$1] Check file $FILENAME ..."
 		echo "$HISTORY_CONTENT" | grep "$file" > /dev/null
 		if [ $? -eq 0 ] ; then
 			local ITEM=`echo $CONTENT_PAGE | do_grep "<h4 class=\"il_ContainerItemTitle\"><a href=\"${ILIAS_URL}${file}.*<div style=\"clear:both;\"></div>"`
 			echo "$ITEM" | grep "geändert" > /dev/null
 			if [ $? -eq 0 ] ; then
-				local FILENAME=`get_filename "$file"`
-				echo -n "$FILENAME changed "
+				local ECHO_MESSAGE="$ECHO_MESSAGE changed"
 				local PART_NAME="${FILENAME%.*}"
 				local PART_EXT="${FILENAME##*.}"
 				local PART_DATE=`date +%Y%m%d-%H%M%S`
 				mv "$FILENAME" "${PART_NAME}.${PART_DATE}.${PART_EXT}"
 			else
-				echo "exists"
+				local ECHO_MESSAGE="$ECHO_MESSAGE exists"
 				((ILIAS_IGN_COUNT++))
 				DO_DOWNLOAD=0
 			fi
 		fi
 		if [ $DO_DOWNLOAD -eq 1 ] ; then
-			# TODO
-            #local FILENAME=`get_filename "$file"`
-			local FILENAME=`echo $file | do_grep "&file=\K(?=&)"`
-			echo -n "$FILENAME downloading... "
+			local ECHO_MESSAGE="$ECHO_MESSAGE $FILENAME downloading..."
 			
 			ilias_request "$file" "-O -J"
 			local RESULT=$?
 			if [ $RESULT -eq 0 ] ; then
 				echo "$file" >> "$HISTORY_FILE"
 				((ILIAS_DL_COUNT++))
-				echo "done"
+				local ECHO_MESSAGE="$ECHO_MESSAGE done"
 				ILIAS_DL_NAMES="${ILIAS_DL_NAMES} - ${FILENAME}
 "
 			else
-				echo "failed: $RESULT"
+				local ECHO_MESSAGE="$ECHO_MESSAGE failed: $RESULT"
 				((ILIAS_FAIL_COUNT++))
 			fi
 		fi
+        echo "$ECHO_MESSAGE"
 	done
     
 }
@@ -199,7 +192,7 @@ function fetch_folder {
 		if [ ! -e "$2/$FOLDER_NAME" ] ; then
 			mkdir "$2/$FOLDER_NAME"
 		fi
-		fetch_folder "$FOLD_NUM" "$2/$FOLDER_NAME" 
+		fetch_folder "$FOLD_NUM" "$2/$FOLDER_NAME" &
 	done
     
     
@@ -209,41 +202,43 @@ function fetch_folder {
 	for file in $ITEMS ; do
 		local DO_DOWNLOAD=1
 		local NUMBER=`echo "$file" | do_grep "[0-9]*"`
-		echo -n "[$NUMBER] "
+		local ECHO_MESSAGE="[$1-$NUMBER]"
 		echo "$HISTORY_CONTENT" | grep "$file" > /dev/null
 		if [ $? -eq 0 ] ; then
 			local ITEM=`echo $CONTENT_PAGE | do_grep "<h4 class=\"il_ContainerItemTitle\"><a href=\"${ILIAS_URL}${file}.*<div style=\"clear:both;\"></div>"`
 			echo "$ITEM" | grep "geändert" > /dev/null
 			if [ $? -eq 0 ] ; then
 				local FILENAME=`get_filename "$file"`
-				echo -n "$FILENAME changed "
+				local ECHO_MESSAGE="$ECHO_MESSAGE $FILENAME changed"
 				local PART_NAME="${FILENAME%.*}"
 				local PART_EXT="${FILENAME##*.}"
 				local PART_DATE=`date +%Y%m%d-%H%M%S`
 				mv "$FILENAME" "${PART_NAME}.${PART_DATE}.${PART_EXT}"
 			else
-				echo "exists"
+				local ECHO_MESSAGE="$ECHO_MESSAGE exists"
 				((ILIAS_IGN_COUNT++))
 				DO_DOWNLOAD=0
 			fi
 		fi
 		if [ $DO_DOWNLOAD -eq 1 ] ; then
 			local FILENAME=`get_filename "$file"`
-			echo -n "$FILENAME downloading... "
+			local ECHO_MESSAGE="$ECHO_MESSAGE $FILENAME downloading..."
 			
 			ilias_request "$file" "-O -J"
 			local RESULT=$?
 			if [ $RESULT -eq 0 ] ; then
 				echo "$file" >> "$HISTORY_FILE"
 				((ILIAS_DL_COUNT++))
-				echo "done"
+				local ECHO_MESSAGE="$ECHO_MESSAGE done"
 				ILIAS_DL_NAMES="${ILIAS_DL_NAMES} - ${FILENAME}
 "
 			else
-				echo "failed: $RESULT"
+				local ECHO_MESSAGE="$ECHO_MESSAGE failed: $RESULT"
 				((ILIAS_FAIL_COUNT++))
 			fi
 		fi
+        
+        echo "$ECHO_MESSAGE"
 	done
     
     

@@ -16,14 +16,15 @@ source IliasDownload.sh
 do_login
 
 # Insert the folders you want to fetch here.
-# Take the id of the folder out of the URL, e.g.
+# Take the id of the folder/course out of the URL, e.g.
 # https://www.ili.fh-aachen.de/goto_elearning_crs_604137.html
 #                                                 ^^^^^^
 # or
-# https://www.ili.fh-aachen.de/goto_elearning_crs_604137.html
-#                                                 ^^^^^^
+# https://www.ili.fh-aachen.de/goto_elearning_fold_604137.html
+#                                                  ^^^^^^
+#
 # You find this link at the bottom of every folder page.
-# Subfolders are automatically downloaded, too.
+# Subfolders and exercises are automatically downloaded, too.
 # You need to use absolute paths for local folders!
 #
 # You can download the hole course or just specific folders.
