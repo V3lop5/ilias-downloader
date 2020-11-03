@@ -82,8 +82,9 @@ do_login() {
 	fi
 	
 	echo "Checking if logged in..."
-	ilias_request "$ILIAS_HOME" | echo # grep ilPersonalDesktopGUI > /dev/null
-	if [ $? -ne 0 ] ; then
+    
+	local ITEMS=`ilias_request "$ILIAS_HOME" | do_grep "ilPersonalDesktopGUI"`
+	if [ -z "$ITEMS" ] ; then
 		echo "Home page check failed. Is your login information correct?"
 		exit 3
 	fi
