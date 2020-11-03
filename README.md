@@ -50,7 +50,7 @@ Das Skript ist nun einsatzbereit.
 Doppelklick aufs ...Init.sh-Skript. Warten. Fertig.
 
 ## Hilfe, es klappt nicht
-Bitte stelle sicher, dass dein Benutzername und dein Passwort korrekt sind. Falls das Passwort exotische Sonderzeichen wie `\"`, `\$`, `\"` oder `\\` enthält, müssen diese durch ein vorgestelltes Backslash `\\` escaped werden.
+Bitte stelle sicher, dass dein Benutzername und dein Passwort korrekt sind. Falls das Passwort exotische Sonderzeichen wie `"`, `$`, `"` oder `\` enthält, müssen diese durch ein vorgestelltes Backslash `\` escaped werden.
 
 Sind die Download-Ordner korrekt angelegt? Prüfen und ggf. Ordner anlegen.
 
@@ -61,4 +61,4 @@ Have you turned it off and on again?
 ## Credits
 https://github.com/digitalshow/IliasDownload
 
-(Ich habe lediglich ein paar Variablen geändert, damit das wundervolle Skript läuft. ... Und dann noch ein paar weitere Dinge.)
+(Ich habe lediglich ein paar Dinge geändert, damit das wundervolle Skript läuft.)
