@@ -12,9 +12,11 @@ in einen vorher definierten Download-Ordner heruntergeladen.
 
 ## Vorbereitungen
 0. Falls Ilias in eine bestehende Verzeichnisstruktur heruntergeladen werden sollen, empfiehlt sich vorher eine Sicherungskopie anzulegen. 
-1. (Git Bash)[https://git-scm.com/downloads] herunterladen 
-2. Git Bash zur Ausführung von Dateien des Typs `.sh` (Shell-Skript) verwenden
-3. Die beiden Skripte aus diesem Repository herunterladen
+1. [Git Bash](https://git-scm.com/downloads) herunterladen.
+2. Git Bash zur Ausführung von Dateien des Typs `.sh` (Shell-Skript) verwenden.
+3. Die beiden Skripte aus diesem Repository herunterladen und in einem beliebigen Ordner ablegen.
+    - [Download Skript `IliasDownload.sh`](https://git.fh-aachen.de/MATSE/ilias-downloader/-/raw/master/IliasDownload.sh?inline=false)
+    - [Download Skript `IliasDownloadInit.sh`](https://git.fh-aachen.de/MATSE/ilias-downloader/-/raw/master/IliasDownloadInit.sh?inline=false)
 
 ## Konfiguration
 `IliasDownloadInit.sh` Skript wie folgt konfigurieren:
@@ -40,7 +42,7 @@ Im weiteren Verlauf des Dokuments müssen alle Ilias Kurse/Ordner eingetragen we
 fetch_folder "593215" "$MY_STUDIES_FOLDER/Digitale Services für die Energie- und Mobolitätswende" 
 ```
 
-Anmerkung: Die hier eingetragenen Download-Ordner müssen existieren. Falls die DownloAD-Ordner nicht existieren, wird das Skript auch nichts machen. (Eventuelle Unterordner werden beim Synchronisieren automatisch erstellt.)
+Anmerkung: Die hier eingetragenen Download-Ordner müssen existieren. Falls die Download-Ordner nicht existieren, wird das Skript auch nichts machen. (Eventuelle Unterordner werden beim Synchronisieren automatisch erstellt.)
 
 Das Skript ist nun einsatzbereit.
 
@@ -55,7 +57,6 @@ Sind die Download-Ordner korrekt angelegt? Prüfen und ggf. Ordner anlegen.
 Du bist an einer anderen Uni als der FH-Aachen? Es sind weitere Konfigurationen notwendig. Bitte das `IliasDownload.sh` Skript prüfen.
 
 Have you turned it off and on again?
-
 
 ## Credits
 https://github.com/digitalshow/IliasDownload
