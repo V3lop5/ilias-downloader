@@ -58,6 +58,13 @@ Du bist an einer anderen Uni als der FH-Aachen? Es sind weitere Konfigurationen 
 
 Have you turned it off and on again?
 
+## Geplant (falls sich ein Entwickler findet)
+- Passwort nicht im Skript hinterlegen, sondern mit Eingabeaufforderung
+- Herunterladen der Übungsaufgaben (`_lm_<id>.html`, z.B. ML1 Bialonki) 
+- Sowie der Links aus diesen Übungsufgaben
+- Herunterladen von verlinkten mp4 Videos (z.B. Verteilte Systeme vom Sander)
+
+
 ## Credits
 https://github.com/digitalshow/IliasDownload
 
