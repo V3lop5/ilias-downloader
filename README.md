@@ -15,8 +15,6 @@ in einen vorher definierten Download-Ordner heruntergeladen.
 1. [Git Bash](https://git-scm.com/downloads) herunterladen.
 2. Git Bash zur Ausführung von Dateien des Typs `.sh` (Shell-Skript) verwenden.
 3. Die beiden Skripte aus diesem Repository herunterladen und in einem beliebigen Ordner ablegen.
-    - [Download Skript `IliasDownload.sh`](https://git.fh-aachen.de/MATSE/ilias-downloader/-/raw/master/IliasDownload.sh?inline=false)
-    - [Download Skript `IliasDownloadInit.sh`](https://git.fh-aachen.de/MATSE/ilias-downloader/-/raw/master/IliasDownloadInit.sh?inline=false)
 
 ## Konfiguration
 `IliasDownloadInit.sh` Skript wie folgt konfigurieren:
