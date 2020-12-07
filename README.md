@@ -15,8 +15,6 @@ in einen vorher definierten Download-Ordner heruntergeladen.
 1. [Git Bash](https://git-scm.com/downloads) herunterladen.
 2. Git Bash zur Ausführung von Dateien des Typs `.sh` (Shell-Skript) verwenden.
 3. Die beiden Skripte aus diesem Repository herunterladen und in einem beliebigen Ordner ablegen.
-    - [Download Skript `IliasDownload.sh`](https://git.fh-aachen.de/MATSE/ilias-downloader/-/raw/master/IliasDownload.sh?inline=false)
-    - [Download Skript `IliasDownloadInit.sh`](https://git.fh-aachen.de/MATSE/ilias-downloader/-/raw/master/IliasDownloadInit.sh?inline=false)
 
 ## Konfiguration
 `IliasDownloadInit.sh` Skript wie folgt konfigurieren:
@@ -50,7 +48,7 @@ Das Skript ist nun einsatzbereit.
 Doppelklick aufs ...Init.sh-Skript. Warten. Fertig.
 
 ## Hilfe, es klappt nicht
-Bitte stelle sicher, dass dein Benutzername und dein Passwort korrekt sind. Falls das Passwort exotische Sonderzeichen wie `\"`, `\$`, `\"` oder `\\` enthält, müssen diese durch ein vorgestelltes Backslash `\\` escaped werden.
+Bitte stelle sicher, dass dein Benutzername und dein Passwort korrekt sind. Falls das Passwort exotische Sonderzeichen wie `"`, `$`, `"` oder `\` enthält, müssen diese durch ein vorgestelltes Backslash `\` escaped werden.
 
 Sind die Download-Ordner korrekt angelegt? Prüfen und ggf. Ordner anlegen.
 
@@ -58,7 +56,14 @@ Du bist an einer anderen Uni als der FH-Aachen? Es sind weitere Konfigurationen 
 
 Have you turned it off and on again?
 
+## Geplant (falls sich ein Entwickler findet)
+- Passwort nicht im Skript hinterlegen, sondern mit Eingabeaufforderung
+- Herunterladen der Übungsaufgaben (`_lm_<id>.html`, z.B. ML1 Bialonki) 
+- Sowie der Links aus diesen Übungsufgaben
+- Herunterladen von verlinkten mp4 Videos (z.B. Verteilte Systeme vom Sander)
+
+
 ## Credits
 https://github.com/digitalshow/IliasDownload
 
-(Ich habe lediglich ein paar Variablen geändert, damit das wundervolle Skript läuft. ... Und dann noch ein paar weitere Dinge.)
+(Ich habe lediglich ein paar Dinge geändert, damit das wundervolle Skript läuft.)
