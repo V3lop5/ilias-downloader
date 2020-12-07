@@ -223,6 +223,17 @@ function fetch_folder {
 		fi
 		if [ $DO_DOWNLOAD -eq 1 ] ; then
 			local FILENAME=`get_filename "$file"`
+            
+            # Prüfen, ob lokale Datei mit dem Namen existiert. Falls ja, muss diese umbenannt werden. (Kann passieren, wenn Dateien im Ilias nicht aktualisiert, sondern gelöscht und neu hochgeladen werden.)
+            if [[ -f "$FILENAME" ]]; then
+				local ECHO_MESSAGE="$ECHO_MESSAGE $FILENAME new"
+				local PART_NAME="${FILENAME%.*}"
+				local PART_EXT="${FILENAME##*.}"
+				local PART_DATE=`date +%Y%m%d-%H%M%S`
+				mv "$FILENAME" "${PART_NAME}.${PART_DATE}.${PART_EXT}"
+                
+            fi
+            
 			local ECHO_MESSAGE="$ECHO_MESSAGE $FILENAME downloading..."
 			
 			ilias_request "$file" "-O -J"
