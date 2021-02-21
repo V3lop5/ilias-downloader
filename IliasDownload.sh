@@ -40,6 +40,7 @@ ILIAS_DL_COUNT=0
 ILIAS_IGN_COUNT=0
 ILIAS_FAIL_COUNT=0
 ILIAS_DL_NAMES=""
+ILIAS_DL_FAILED_NAMES=""
 
 check_grep_availability() {
 	echo "abcde" | grep -oP "abc\Kde"
@@ -152,6 +153,8 @@ function fetch_exc {
 			else
 				local ECHO_MESSAGE="$ECHO_MESSAGE failed: $RESULT"
 				((ILIAS_FAIL_COUNT++))
+				ILIAS_DL_FAILED_NAMES="${ILIAS_DL_NAMES} - ${FILENAME} (failed: $RESULT)
+"
 			fi
 		fi
         echo "$ECHO_MESSAGE"
@@ -180,7 +183,7 @@ function fetch_folder {
 	fi
 	
     
-	# Folders
+	# Fetch Subfolders recursive (async) 
 	local ITEMS=`echo "$CONTENT_PAGE" | do_grep "<h4 class=\"il_ContainerItemTitle\"><a href=\"${ILIAS_URL}\Kgoto_${ILIAS_PREFIX}_fold_[0-9]*.html"`
 	
 	for folder in $ITEMS ; do
@@ -231,7 +234,6 @@ function fetch_folder {
 				local PART_EXT="${FILENAME##*.}"
 				local PART_DATE=`date +%Y%m%d-%H%M%S`
 				mv "$FILENAME" "${PART_NAME}.${PART_DATE}.${PART_EXT}"
-                
             fi
             
 			local ECHO_MESSAGE="$ECHO_MESSAGE $FILENAME downloading..."
@@ -247,6 +249,8 @@ function fetch_folder {
 			else
 				local ECHO_MESSAGE="$ECHO_MESSAGE failed: $RESULT"
 				((ILIAS_FAIL_COUNT++))
+				ILIAS_DL_FAILED_NAMES="${ILIAS_DL_NAMES} - ${FILENAME} (failed: $RESULT)
+"
 			fi
 		fi
         
@@ -279,7 +283,11 @@ function print_stat() {
 	echo
 	echo "Downloaded $ILIAS_DL_COUNT new files, ignored $ILIAS_IGN_COUNT files, $ILIAS_FAIL_COUNT failed."
 	echo "$ILIAS_DL_NAMES"
-	sleep 10
+
+	if [ "$ILIAS_DL_FAILED_NAMES" -ne ""] ; then
+		echo "Following downloads failed:"
+		echo "$ILIAS_DL_FAILED_NAMES"
+	fi
 }
 
 check_grep_availability
