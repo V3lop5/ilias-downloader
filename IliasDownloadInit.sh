@@ -27,7 +27,7 @@ do_login
 # Subfolders and exercises are automatically downloaded, too.
 # You need to use absolute paths for local folders!
 #
-# You can download the hole course or just specific folders.
+# You can download the hole course or just specific folders from a course.
 
 # Preset your Homefolder
 MY_STUDIES_FOLDER="/E/IliasTest"
@@ -48,10 +48,11 @@ fetch_folder "590657" "$MY_STUDIES_FOLDER/Management regenerativer Energiesystem
 
 fetch_folder "290557" "$MY_STUDIES_FOLDER/Verteilte Systeme - Grundlagen" 
 
-# Don't modify
+# Don't modify (awaiting completion of all fetch_folders)
 wait
 do_logout
-print_stat
-
-# Don't modify
 rm $COOKIE_PATH
+
+# Don't modify (printing final stats)
+print_stat
+sleep 10
