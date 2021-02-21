@@ -16,14 +16,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Für FH Aachen Ilias angepasst von Paul Krüger.
+# Für FH Aachen angepasst von Paul Krüger, Oktober 2020.
 #
 
 if [ -z "$COOKIE_PATH" ] ; then
 	COOKIE_PATH=/tmp/ilias-cookies.txt
 fi
 
-# If you're not at Uni Stuttgart, you might still be able to use this script by changing stuff below
+# If you're not at FH Aachen, you might still be able to use this script by changing stuff below
 
 ILIAS_URL="https://www.ili.fh-aachen.de/"
 ILIAS_PREFIX="elearning"
@@ -31,7 +31,7 @@ ILIAS_LOGIN_GET="login.php?client_id=elearning&lang=de"
 ILIAS_HOME="ilias.php?baseClass=ilPersonalDesktopGUI&cmd=jumpToSelectedItems"
 ILIAS_LOGOUT="logout.php?lang=de"
 
-# Prefix for Übungen 
+# Prefix für lokalen Ordernamen von Übungen  
 EXC_FOLDER_PREFIX="exc "
 
 # DON'T TOUCH FROM HERE ON
@@ -279,6 +279,7 @@ function print_stat() {
 	echo
 	echo "Downloaded $ILIAS_DL_COUNT new files, ignored $ILIAS_IGN_COUNT files, $ILIAS_FAIL_COUNT failed."
 	echo "$ILIAS_DL_NAMES"
+	sleep 10
 }
 
 check_grep_availability
