@@ -36,6 +36,7 @@ EXC_FOLDER_PREFIX="exc "
 
 # DON'T TOUCH FROM HERE ON
 
+# TODO Die Variablen zählen falsch, da sie nicht zwischen den parallelen Prozessen geteilt werden.. Ein Logfile wäre vermutlich cooler.
 ILIAS_DL_COUNT=0
 ILIAS_IGN_COUNT=0
 ILIAS_FAIL_COUNT=0
@@ -284,7 +285,7 @@ function print_stat() {
 	echo "Downloaded $ILIAS_DL_COUNT new files, ignored $ILIAS_IGN_COUNT files, $ILIAS_FAIL_COUNT failed."
 	echo "$ILIAS_DL_NAMES"
 
-	if [ "$ILIAS_DL_FAILED_NAMES" -ne ""] ; then
+	if [ ! -z "$ILIAS_DL_FAILED_NAMES" ] ; then
 		echo "Following downloads failed:"
 		echo "$ILIAS_DL_FAILED_NAMES"
 	fi
