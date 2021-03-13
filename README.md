@@ -22,10 +22,10 @@ Lade die Dateien aus deinen Ilias-Kursen mit nur einem Klick herunter.
    - **Linux**: Kann das; Keine Installation notwendig
    - **Mac**: Kann das(?); Keine Installation notwendig
    - **Windows**: Einfachste Variante ist die Installation der [Git Bash](https://git-scm.com/downloads). Nach Installation kann die Git Bash als Standard zur Ausführung von Shell Scripten verwendet werden. 
-2. Die beiden Skripte aus diesem Repository herunterladen und in einem beliebigen Ordner ablegen.
+2. Lade dir die Skripte für deine Universität [hier](https://github.com/V3lop5/ilias-downloader/releases/latest) herunter und entpacke die zip-Datei in einem beliebigen Ordner. Uni nicht gefunden? Schau [hier](https://github.com/V3lop5/ilias-downloader#meine-uni-ist-nicht-dabei-was-nun).
 
 ### Konfiguration
-Das Script `IliasDownloadInit.sh` muss vor der ersten Ausfürhung einmalig konfiguriert werden.
+Das Script `IliasDownloadInit.sh` muss vor der ersten Ausfürhung **einmalig** konfiguriert werden.
 
 Im oberen Teil müssen **Benutzername und Passwort für Ilias** eingetragen werden. (Zeile 5)
 ```shell
@@ -61,37 +61,52 @@ Die Kurs- oder Ordner-Nummer versteckt sich in der Ilias-URL.
 fetch_folder "593215" "$MY_STUDIES_FOLDER/Digitale Services für die Energie- und Mobolitätswende" 
 ```
 
-Anmerkung: Die hier eingetragenen Download-Ordner müssen existieren. Falls die Download-Ordner nicht existieren, wird das Skript auch nichts machen. (Eventuelle Unterordner werden beim Synchronisieren automatisch erstellt.)
+Anmerkung: Die hier eingetragenen Download-Ordner müssen existieren. Falls der Download-Ordner nicht existiert, wird das Skript keine Dateien herunterladen. Dies dient zum Schutz vor falschen Konfigurationen. (Eventuelle Unterordner im Ilias-Kurs/Ilias-Ordner werden beim Synchronisieren automatisch erstellt.)
 
 Das Skript ist nun einsatzbereit.
 
 ### Ausführung
 Doppelklick aufs `IliasDownloadInit.sh`-Skript. Warten. Fertig.
 
+**Tipp:** Erstelle eine Verknüpfung auf dem Desktop. So lässt sich das Script noch einfacherer benutzen.
 
 ## FAQ
-##### Es werden keine Dateien heruntergeladen. Was mache ich falsch?
+#### Meine Uni ist nicht dabei. Was nun?
+Eine Liste der unterstützen Universitäten findest du [hier](https://github.com/V3lop5/ilias-downloader/tree/master/configs).
+Damit ich deine Uni hinzufügen kann, brauche ich einige Informationen über das Ilias deiner Universität. 
+- URL zur Login Seite des Ilias
+- URL der Homepage nach erfolgreichem Login
+- URL eines beliebigen Kurses, den du herunterladen möchtest
+- URL der Logout Seite (die Seite nach Klick auf den Logout-Button)
+
+Alternativ kannst du dir die [.config-Datei](https://github.com/V3lop5/ilias-downloader/blob/master/.config) angucken und selber die Konfiguration vornehmen. Stelle gerne einen PR und teile die Konfiguration mit anderen.
+
+#### Es werden keine Dateien heruntergeladen. Was mache ich falsch?
 Die Gründe können vielfältig sein. Bitte prüfe, ob ...
 - die im `IliasDownloadInit.sh` angegebenen Verzeichnisse existieren. (Das Script lädt nur in vorhandene Verzeichnisse herunter)
 - Benutzername und Password korrekt sind. Falls das Passwort exotische Sonderzeichen wie `"`, `$`, `"` oder `\` enthält, müssen diese durch ein vorgestelltes Backslash `\` escaped werden.
 - das `IliasDownload.sh` Script für deine Uni konfiguriert ist.
 
-##### Welche Bedeutung hat die Datei `.il-history`?
+#### Welche Bedeutung hat die Datei `.il-history`?
 Das Script speichert sich in dieser Datei welche Dokumente bereits heruntergeladen wurden. Wenn du diese Datei löschst, werden die Dokumente in diesem Ordner erneut heruntergeladen.
+Der Name dieser Datei kann mit der Variable `HISTORY_FILE` in dem Script `IliasDownloadInit.sh` geändert werden.
 
-##### Einzelne Dateien werden nicht heruntergeladen.
+#### Einzelne Dateien werden nicht heruntergeladen.
 Dies kann verschiedene Gründe haben. Kontaktiere mich gerne & ich versuche zu helfen.
 
-Ein bekanntes Problem entsteht durch zulange Dateinamen. Der Dateiname inklusive Pfad darf maximal 255 (?) Zeichen haben. Versuche im `IliasDownloadInit.sh` kürzere Pfade anzugeben.
+Ein bekanntes Problem entsteht durch zulange Dateinamen. Der Dateiname inklusive Pfad darf maximal 255 (?) Zeichen lang sein. Versuche im `IliasDownloadInit.sh` kürzere Pfade für deine Ordner anzugeben. 
 
 ## Roadmap (feel free to contribute)
+- Animation erstellen, die Funktionsweise des Scripts zeigt.
 - Passwort nicht im Skript hinterlegen, sondern mit Eingabeaufforderung. 
 - Falls gewünscht, Nutzername und Passwort in `.credentials` Datei abspeichern.
 - Herunterladen der Übungsaufgaben (`_lm_<id>.html`) (Sowie Links aus den Übungsaufgaben)
-- Anzahl der heruntergeladenenen/fehlgeschlagenenen Dateien korrigieren.
+- Anzahl der heruntergeladenenen/fehlgeschlagenenen Dateien korrigieren. (Aufgrund der parallelen downloads falsch.)
 - Herunterladen von verlinkten Videos
 - Verknüpfung "Online anzeigen" erstellen
 - Konfiguration für weitere Unis hinzufügen
+- Hinweis einbauen, wenn es eine neue Version gibt.
+- Zu lange Ilias-Dateinamen hashen, damit Datei dennoch heruntergeladen werden kann.
 
 
 ## Credits
