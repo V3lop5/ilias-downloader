@@ -1,0 +1,88 @@
+name: Release
+
+# Controls when the action will run. 
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+    - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:  
+  release:
+    runs-on: ubuntu-latest
+    outputs:
+      asset_url: ${{ steps.create_release.outputs.upload_url }} 
+    steps:
+      - uses: actions/checkout@v2
+        
+        # Build Changelog by PRs
+      - name: "Build Changelog"
+        id: build_changelog
+        uses: mikepenz/release-changelog-builder-action@v1
+        with:
+          configuration: ".github/release-changelog-configuration.json"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+        # Create and publish Release
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: ${{steps.build_changelog.outputs.changelog}}
+          draft: false
+          prerelease: false
+     
+  matrix_prep:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+    - id: set-matrix
+      run: | 
+        matrix=$(find "configs" -maxdepth 1 -type f -name "*.config" -printf "%f, " | sed -e 's/\.config//g' -e 's/, $//')                
+        echo ::set-output name=matrix::{[$(echo $matrix)]}
+        
+    - id: print-matrix
+      run: | 
+        echo ${{ steps.set-matrix.outputs.matrix }}
+    
+     
+  upload_asset: 
+    needs: [release, matrix_prep]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        university: ${{ needs.matrix_prep.outputs.matrix}}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      
+      - name: Create archiv name
+        id: archiv-name
+        run: |
+          echo ::set-output name=zip::{$(echo "ilias-downloader-${{ matrix.university }}.zip")}
+        
+      - name: Create asset
+        run: |
+          mkdir "assets/${{ matrix.university }}"
+          cp -t "assets/${{ matrix.university }}" IliasDownload.sh IliasDownloadInit.sh
+          cp "configs/${{ matrix.university }}.config" "assets/${{ matrix.university }}/.config"
+          zip "${{ steps.archiv-name.outputs.zip }}" -r "assets/${{ matrix.university }}"
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.release.outputs.asset_url }} # asset upload url from job release
+          asset_path: ./${{ steps.archiv-name.outputs.zip }}
+          asset_name: ${{ steps.archiv-name.outputs.zip }}
+          asset_content_type: application/zip          
