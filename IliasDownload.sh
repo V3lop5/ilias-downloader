@@ -23,13 +23,15 @@ if [ -z "$COOKIE_PATH" ] ; then
 	COOKIE_PATH=/tmp/ilias-cookies.txt
 fi
 
-# If you're not at FH Aachen, you might still be able to use this script by changing stuff below
+# Load env-variables from config
+. .config
 
-ILIAS_URL="https://www.ili.fh-aachen.de/"
-ILIAS_PREFIX="elearning"
-ILIAS_LOGIN_GET="login.php?client_id=elearning&lang=de"
-ILIAS_HOME="ilias.php?baseClass=ilPersonalDesktopGUI&cmd=jumpToSelectedItems"
-ILIAS_LOGOUT="logout.php?lang=de"
+# .config example:
+#   ILIAS_URL="https://www.ili.fh-aachen.de/"
+#   ILIAS_PREFIX="elearning"
+#   ILIAS_LOGIN_GET="login.php?client_id=elearning&lang=de"
+#   ILIAS_HOME="ilias.php?baseClass=ilPersonalDesktopGUI&cmd=jumpToSelectedItems"
+#   ILIAS_LOGOUT="logout.php?lang=de"
 
 # Prefix für lokalen Ordernamen von Übungen  
 EXC_FOLDER_PREFIX="exc "
@@ -42,6 +44,59 @@ ILIAS_IGN_COUNT=0
 ILIAS_FAIL_COUNT=0
 ILIAS_DL_NAMES=""
 ILIAS_DL_FAILED_NAMES=""
+
+check_config() {
+    if [[ -z "${ILIAS_URL}" ]]; then
+        echo "[Config] Ilias URL nicht gesetzt."
+        exit 10 # terminate with error - ilias url missing
+    else
+        echo "[Config] ILIAS_URL=$ILIAS_URL"
+    fi
+    
+    if [[ -z "${ILIAS_PREFIX}" ]]; then
+        echo "[Config] Ilias Prefix nicht gesetzt."
+        exit 11 # terminate with error - ilias prefix missing
+    else
+        echo "[Config] ILIAS_PREFIX=$ILIAS_PREFIX"
+    fi
+    
+    if [[ -z "${ILIAS_LOGIN_GET}" ]]; then
+        echo "[Config] Ilias Login Pfad nicht gesetzt."
+        exit 12 # terminate with error - ilias login get missing
+    else
+        echo "[Config] ILIAS_LOGIN_GET=$ILIAS_LOGIN_GET"
+    fi
+    
+    if [[ -z "${ILIAS_HOME}" ]]; then
+        echo "[Config] Ilias Home Pfad nicht gesetzt."
+        exit 13 # terminate with error - ilias home missing
+    else
+        echo "[Config] ILIAS_HOME=$ILIAS_HOME"
+    fi
+    
+    if [[ -z "${ILIAS_LOGOUT}" ]]; then
+        echo "[Config] Ilias Logout Pfad nicht gesetzt."
+        exit 14 # terminate with error - ilias logout missing
+    else
+        echo "[Config] ILIAS_LOGOUT=$ILIAS_LOGOUT"
+    fi
+}
+
+check_credentials() {
+    if [[ -z "${ILIAS_USERNAME}" ]]; then
+        echo "[Config] Bitte Nutzername eingeben und Script erneut ausführen."
+        exit 15 # terminate with error - ilias username missing
+    else
+        echo "[Config] ILIAS_USERNAME=$ILIAS_USERNAME"
+    fi
+    
+    if [[ -z "${ILIAS_PASSWORD}" ]]; then
+        echo "[Config] Bitte Passwort eingeben und Script erneut ausführen."
+        exit 16 # terminate with error - ilias prefix missing
+    else
+        echo "[Config] ILIAS_PASSWORD=$(echo "$ILIAS_PASSWORD" | sed 's/./*/g')"
+    fi
+}
 
 check_grep_availability() {
 	echo "abcde" | grep -oP "abc\Kde"
@@ -292,3 +347,5 @@ function print_stat() {
 }
 
 check_grep_availability
+check_config
+check_credentials
