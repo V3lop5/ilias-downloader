@@ -85,7 +85,8 @@ Dies kann verschiedene Gründe haben. Kontaktiere mich gerne & ich versuche zu h
 Ein bekanntes Problem entsteht durch zulange Dateinamen. Der Dateiname inklusive Pfad darf maximal 255 (?) Zeichen haben. Versuche im `IliasDownloadInit.sh` kürzere Pfade anzugeben.
 
 ## Roadmap (feel free to contribute)
-- Passwort nicht im Skript hinterlegen, sondern mit Eingabeaufforderung
+- Passwort nicht im Skript hinterlegen, sondern mit Eingabeaufforderung. 
+- Falls gewünscht, Nutzername und Passwort in `.credentials` Datei abspeichern.
 - Herunterladen der Übungsaufgaben (`_lm_<id>.html`) (Sowie Links aus den Übungsaufgaben)
 - Herunterladen von verlinkten Videos
 - Verknüpfung "Online anzeigen" erstellen
