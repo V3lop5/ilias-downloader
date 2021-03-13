@@ -1,25 +1,37 @@
+# This Repository has moved to GitHub!
+This Repository is now on [GitHub V3lop5/ilias-downloader](https://github.com/V3lop5/ilias-downloader). 
+
+
 # Ilias (1 click) Downloader
-Synchronisiert die Dateien von einem oder mehreren Ordnern/Kurse von dem FH-Ilias mit der eigenen Platte.
-Sollte es zwischenzeitlich eine Änderung der Datei im Ilias gegeben haben, so wird die lokale Kopie umbenannt und die Datei erneut heruntergeladen.
+Lade die Dateien aus deinen Ilias-Kursen mit nur einem Klick herunter.
 
-Das Beste? Man braucht (nach der erstmaligen Einrichtung) nur einen Klick (& einen Kaffee).
+## Features
+:heavy_check_mark: Synchronisierung von Ilias-Kursen oder Ilias-Ordnern in einem beliebigen Ordner
 
-Es können entweder Ordner oder Kurse zum Download ausgewählt werden. Aus den Kursen/Ordnern werden alle
-- Dateien
-- Unterordner 
-- Übungsaufgaben
-in einen vorher definierten Download-Ordner heruntergeladen. 
+:heavy_check_mark: Synchronisierung von Unterordnern der angegebenen Ilias-Kurse/Ordner
 
-## Vorbereitungen
-0. Falls Ilias in eine bestehende Verzeichnisstruktur heruntergeladen werden sollen, empfiehlt sich vorher eine Sicherungskopie anzulegen. 
-1. [Git Bash](https://git-scm.com/downloads) herunterladen.
-2. Git Bash zur Ausführung von Dateien des Typs `.sh` (Shell-Skript) verwenden.
-3. Die beiden Skripte aus diesem Repository herunterladen und in einem beliebigen Ordner ablegen.
+:heavy_check_mark: Download von Dateien
 
-## Konfiguration
-`IliasDownloadInit.sh` Skript wie folgt konfigurieren:
+:heavy_check_mark: Download von Übungsaufgaben
 
-Im oberen Teil müssen Benutzername und Passwort für Ilias eingetragen werden. (Zeile 5)
+:heavy_check_mark: Bei Datei-Aktualisierungen im Ilias wird die lokale Kopie umbenannt & die Datei erneut heruntergeladen.
+
+:heavy_check_mark: Click & Run - Synchronisation mit nur einem Klick
+
+:heavy_check_mark: Konfiguriert für Ilias der FH-Aachen
+
+## How to use
+### Vorbereitungen
+1. Bash zur Ausführung von Shell (`.sh`) Scripten
+   - **Linux**: Kann das; Keine Installation notwendig
+   - **Mac**: Kann das(?); Keine Installation notwendig
+   - **Windows**: Einfachste Variante ist die Installation der [Git Bash](https://git-scm.com/downloads). Nach Installation kann die Git Bash als Standard zur Ausführung von Shell Scripten verwendet werden. 
+2. Die beiden Skripte aus diesem Repository herunterladen und in einem beliebigen Ordner ablegen.
+
+### Konfiguration
+Das Script `IliasDownloadInit.sh` muss vor der ersten Ausfürhung einmalig konfiguriert werden.
+
+Im oberen Teil müssen **Benutzername und Passwort für Ilias** eingetragen werden. (Zeile 5)
 ```shell
 # Enter ILIAS username and password here
 # Modify here
@@ -27,14 +39,27 @@ ILIAS_USERNAME="mm1234s"
 ILIAS_PASSWORD="password"
 ```
 
-Im weiteren Verlauf kann das Verzeichnis festgelegt werden, in welches alle Ilias-Unterlagen heruntergeladen werden sollen. Die Skripte werden nur Änderungen in diesem (bzw. in den Unterordnern dieses Verzeichnisses durchführen).
+Im weiteren Verlauf des Scripts muss das **Basis-Verzeichnis** festgelegt werden, in das alle Ilias-Unterlagen heruntergeladen werden sollen. 
 ```shell
 # Preset your Homefolder
 MY_STUDIES_FOLDER="/E/IliasTest"
 ```
 
-Im weiteren Verlauf des Dokuments müssen alle Ilias Kurse/Ordner eingetragen werden, die heruntergeladen werden sollen. Hier kann der relative Pfad zum Homeverzeichnis.
+Danach müssen alle **Ilias-Kurse oder Ilias-Ordner** eingetragen werden, die heruntergeladen werden sollen. Zu der Kurs- oder Ordner-Nummer von Ilias muss jeweils ein lokales Verzeichnis angegeben werden. Es empiehlt sich die Verwendung von absoluten Pfaden und dem Basis-verzeichnis. 
+
+Die Kurs- oder Ordner-Nummer versteckt sich in der Ilias-URL.
 ```shell
+# Take the id of the folder/course out of the URL, e.g.
+# https://www.ili.fh-aachen.de/goto_elearning_crs_604137.html
+#                                                 ^^^^^^
+# or
+# https://www.ili.fh-aachen.de/goto_elearning_fold_604137.html
+#                                                  ^^^^^^
+#
+# You find this link at the bottom of every folder page.
+# Subfolders and exercises are automatically downloaded, too.
+# You need to use absolute paths for local folders!
+
 # Copy for every course/folder you want to download
 # Modify here
 fetch_folder "593215" "$MY_STUDIES_FOLDER/Digitale Services für die Energie- und Mobolitätswende" 
@@ -44,23 +69,31 @@ Anmerkung: Die hier eingetragenen Download-Ordner müssen existieren. Falls die 
 
 Das Skript ist nun einsatzbereit.
 
-## Ausführung
-Doppelklick aufs ...Init.sh-Skript. Warten. Fertig.
+### Ausführung
+Doppelklick aufs `IliasDownloadInit.sh`-Skript. Warten. Fertig.
 
-## Hilfe, es klappt nicht
-Bitte stelle sicher, dass dein Benutzername und dein Passwort korrekt sind. Falls das Passwort exotische Sonderzeichen wie `"`, `$`, `"` oder `\` enthält, müssen diese durch ein vorgestelltes Backslash `\` escaped werden.
 
-Sind die Download-Ordner korrekt angelegt? Prüfen und ggf. Ordner anlegen.
+## FAQ
+##### Es werden keine Dateien heruntergeladen. Was mache ich falsch?
+Die Gründe können vielfältig sein. Bitte prüfe, ob ...
+- die im `IliasDownloadInit.sh` angegebenen Verzeichnisse existieren. (Das Script lädt nur in vorhandene Verzeichnisse herunter)
+- Benutzername und Password korrekt sind. Falls das Passwort exotische Sonderzeichen wie `"`, `$`, `"` oder `\` enthält, müssen diese durch ein vorgestelltes Backslash `\` escaped werden.
+- das `IliasDownload.sh` Script für deine Uni konfiguriert ist.
 
-Du bist an einer anderen Uni als der FH-Aachen? Es sind weitere Konfigurationen notwendig. Bitte das `IliasDownload.sh` Skript prüfen.
+##### Welche Bedeutung hat die Datei `.il-history`?
+Das Script speichert sich in dieser Datei welche Dokumente bereits heruntergeladen wurden. Wenn du diese Datei löschst, werden die Dokumente in diesem Ordner erneut heruntergeladen.
 
-Have you turned it off and on again?
+##### Einzelne Dateien werden nicht heruntergeladen.
+Dies kann verschiedene Gründe haben. Kontaktiere mich gerne & ich versuche zu helfen.
 
-## Geplant (falls sich ein Entwickler findet)
+Ein bekanntes Problem entsteht durch zulange Dateinamen. Der Dateiname inklusive Pfad darf maximal 255 (?) Zeichen haben. Versuche im `IliasDownloadInit.sh` kürzere Pfade anzugeben.
+
+## Roadmap (feel free to contribute)
 - Passwort nicht im Skript hinterlegen, sondern mit Eingabeaufforderung
-- Herunterladen der Übungsaufgaben (`_lm_<id>.html`, z.B. ML1 Bialonki) 
-- Sowie der Links aus diesen Übungsufgaben
-- Herunterladen von verlinkten mp4 Videos (z.B. Verteilte Systeme vom Sander)
+- Herunterladen der Übungsaufgaben (`_lm_<id>.html`) (Sowie Links aus den Übungsaufgaben)
+- Herunterladen von verlinkten Videos
+- Verknüpfung "Online anzeigen" erstellen
+- Konfiguration für weitere Unis hinzufügen
 
 
 ## Credits
