@@ -88,6 +88,7 @@ Ein bekanntes Problem entsteht durch zulange Dateinamen. Der Dateiname inklusive
 - Passwort nicht im Skript hinterlegen, sondern mit Eingabeaufforderung. 
 - Falls gewünscht, Nutzername und Passwort in `.credentials` Datei abspeichern.
 - Herunterladen der Übungsaufgaben (`_lm_<id>.html`) (Sowie Links aus den Übungsaufgaben)
+- Anzahl der heruntergeladenenen/fehlgeschlagenenen Dateien korrigieren.
 - Herunterladen von verlinkten Videos
 - Verknüpfung "Online anzeigen" erstellen
 - Konfiguration für weitere Unis hinzufügen
