@@ -1,7 +1,3 @@
-# This Repository has moved to GitHub!
-This Repository is now on [GitHub V3lop5/ilias-downloader](https://github.com/V3lop5/ilias-downloader). 
-
-
 # Ilias (1 click) Downloader
 Lade die Dateien aus deinen Ilias-Kursen mit nur einem Klick herunter.
 
