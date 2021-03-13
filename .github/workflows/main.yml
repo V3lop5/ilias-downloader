@@ -60,7 +60,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: 
-        university: ${{ needs.matrix_prep.outputs.matrix}}
+        university: [fh-aachen, fh-aachen2] # ${{ needs.matrix_prep.outputs.matrix}}
     steps:
       - name: Check out code
         uses: actions/checkout@v2
