@@ -34,19 +34,9 @@ MY_STUDIES_FOLDER="/E/IliasTest"
 
 # Copy for every course/folder you want to download
 # Modify here
-fetch_folder "593215" "$MY_STUDIES_FOLDER/Digitale Services für die Energie- und Mobolitätswende" 
+fetch_folder "123456" "$MY_STUDIES_FOLDER/Digitale Services für die Energie- und Mobolitätswende" 
 
-fetch_folder "590654" "$MY_STUDIES_FOLDER/Energiedatenanalyse - statistische Methoden" 
-
-fetch_folder "608226" "$MY_STUDIES_FOLDER/Geschäftsprozessmodellierung und betriebliche Informationssysteme" 
-
-fetch_folder "604137" "$MY_STUDIES_FOLDER/Machine Learning 1 Grundlagen und statistische Lerntheorie" 
-
-fetch_folder "590651" "$MY_STUDIES_FOLDER/Management flexibler Energiesysteme" 
-
-fetch_folder "590657" "$MY_STUDIES_FOLDER/Management regenerativer Energiesysteme"
-
-fetch_folder "290557" "$MY_STUDIES_FOLDER/Verteilte Systeme - Grundlagen" 
+fetch_folder "987654" "$MY_STUDIES_FOLDER/Energiedatenanalyse - statistische Methoden" 
 
 # Don't modify (awaiting completion of all fetch_folders)
 wait
