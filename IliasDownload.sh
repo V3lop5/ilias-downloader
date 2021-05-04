@@ -263,9 +263,17 @@ function fetch_folder {
 		local DO_DOWNLOAD=1
 		local NUMBER=`echo "$file" | do_grep "[0-9]*"`
 		local ECHO_MESSAGE="[$1-$NUMBER]"
-		echo "$HISTORY_CONTENT" | grep "$file" > /dev/null
+        
+        # find the box around the file we are processing.
+		local ITEM=`echo $CONTENT_PAGE | do_grep "<h4 class=\"il_ContainerItemTitle\"><a href=\"${ILIAS_URL}${file}.*<div style=\"clear:both;\"></div>"`
+        # extract version information from file. (Might be empty)
+        local VERSION=`echo "$ITEM" | grep -o -P '(?<=<span class=\"il_ItemProperty\"> Version: ).*?(?=&nbsp;&nbsp;</span>.*)'`
+        # build fileId with file url and version number
+        local FILEID=`echo "$file $VERSION" | xargs`
+        
+		echo "$HISTORY_CONTENT" | grep "$FILEID" > /dev/null
 		if [ $? -eq 0 ] ; then
-			local ITEM=`echo $CONTENT_PAGE | do_grep "<h4 class=\"il_ContainerItemTitle\"><a href=\"${ILIAS_URL}${file}.*<div style=\"clear:both;\"></div>"`
+            # If ITEM contains text geändert we must download
 			echo "$ITEM" | grep "geändert" > /dev/null
 			if [ $? -eq 0 ] ; then
 				local FILENAME=`get_filename "$file"`
@@ -285,7 +293,7 @@ function fetch_folder {
             
             # Prüfen, ob lokale Datei mit dem Namen existiert. Falls ja, muss diese umbenannt werden. (Kann passieren, wenn Dateien im Ilias nicht aktualisiert, sondern gelöscht und neu hochgeladen werden.)
             if [[ -f "$FILENAME" ]]; then
-				local ECHO_MESSAGE="$ECHO_MESSAGE $FILENAME new"
+				local ECHO_MESSAGE="$ECHO_MESSAGE new version found"
 				local PART_NAME="${FILENAME%.*}"
 				local PART_EXT="${FILENAME##*.}"
 				local PART_DATE=`date +%Y%m%d-%H%M%S`
@@ -297,7 +305,7 @@ function fetch_folder {
 			ilias_request "$file" "-O -J"
 			local RESULT=$?
 			if [ $RESULT -eq 0 ] ; then
-				echo "$file" >> "$HISTORY_FILE"
+				echo "$FILEID" >> "$HISTORY_FILE"
 				((ILIAS_DL_COUNT++))
 				local ECHO_MESSAGE="$ECHO_MESSAGE done"
 				ILIAS_DL_NAMES="${ILIAS_DL_NAMES} - ${FILENAME}
