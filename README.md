@@ -16,13 +16,19 @@ Lade die Dateien aus deinen Ilias-Kursen mit nur einem Klick herunter.
 
 :heavy_check_mark: Konfiguriert für Ilias der FH-Aachen
 
+## Supported Universities
+- FH Aachen
+- Uni Köln
+
+[Deine Uni fehlt? Hier ist eine Anleitung!](#meine-uni-ist-nicht-dabei-was-nun)
+
 ## How to use
 ### Vorbereitungen
 1. Bash zur Ausführung von Shell (`.sh`) Scripten
    - **Linux**: Kann das; Keine Installation notwendig
    - **Mac**: Kann das(?); Keine Installation notwendig
    - **Windows**: Einfachste Variante ist die Installation der [Git Bash](https://git-scm.com/downloads). Nach Installation kann die Git Bash als Standard zur Ausführung von Shell Scripten verwendet werden. 
-2. Lade dir die Skripte für deine Universität [hier](https://github.com/V3lop5/ilias-downloader/releases/latest) herunter und entpacke die zip-Datei in einem beliebigen Ordner. Uni nicht gefunden? Schau [hier](https://github.com/V3lop5/ilias-downloader#meine-uni-ist-nicht-dabei-was-nun).
+2. Lade dir die Skripte für deine Universität [hier](https://github.com/V3lop5/ilias-downloader/releases/latest) herunter und entpacke die zip-Datei in einem beliebigen Ordner. Uni nicht gefunden? Schau [hier](#meine-uni-ist-nicht-dabei-was-nun).
 
 ### Konfiguration
 Das Script `IliasDownloadInit.sh` muss vor der ersten Ausfürhung **einmalig** konfiguriert werden.
@@ -72,14 +78,14 @@ Doppelklick aufs `IliasDownloadInit.sh`-Skript. Warten. Fertig.
 
 ## FAQ
 #### Meine Uni ist nicht dabei. Was nun?
-Eine Liste der unterstützen Universitäten findest du [hier](https://github.com/V3lop5/ilias-downloader/tree/master/configs).
+Eine Liste der unterstützen Universitäten findest du [hier](https://github.com/V3lop5/ilias-downloader/tree/main/configs).
 Damit ich deine Uni hinzufügen kann, brauche ich einige Informationen über das Ilias deiner Universität. 
 - URL zur Login Seite des Ilias
 - URL der Homepage nach erfolgreichem Login
 - URL eines beliebigen Kurses, den du herunterladen möchtest
 - URL der Logout Seite (die Seite nach Klick auf den Logout-Button)
 
-Alternativ kannst du dir die [.config-Datei](https://github.com/V3lop5/ilias-downloader/blob/master/.config) angucken und selber die Konfiguration vornehmen. Stelle gerne einen PR und teile die Konfiguration mit anderen.
+Alternativ kannst du dir die [.config-Datei](https://github.com/V3lop5/ilias-downloader/blob/main/.config) angucken und selber die Konfiguration vornehmen. Stelle gerne einen PR und teile die Konfiguration mit anderen.
 
 #### Es werden keine Dateien heruntergeladen. Was mache ich falsch?
 Die Gründe können vielfältig sein. Bitte prüfe, ob ...
