@@ -114,6 +114,8 @@ Ein bekanntes Problem entsteht durch zulange Dateinamen. Der Dateiname inklusive
 - Hinweis einbauen, wenn es eine neue Version gibt.
 - Zu lange Ilias-Dateinamen hashen, damit Datei dennoch heruntergeladen werden kann.
 
+## Disclaimer 
+Dies ist kein offizielles Tool der gelisteten Bildungseinrichtungen oder von [Ilias](https://www.ilias.de/) selbst. Ich kann die Einhaltung der gegebenen Richtlinien seitens Ilias oder der jeweiligen Bildungseinrichtung nicht prüfen. Die Haftung liegt ausschließlich bei dir. Dieses nützliche Script wird bei Benutzung in kürzester Zeit viele Anfragen an den Ilias Server deiner Bildungseinrichtung stellen. Dies kann unter Umständen zur Überlastung führen. (Und könnte deshalb von deiner Bildungseinrichtung nicht gewünscht sein.)
 
 ## Credits
 https://github.com/digitalshow/IliasDownload
