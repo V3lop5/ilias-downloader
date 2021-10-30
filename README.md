@@ -16,9 +16,12 @@ Lade die Dateien aus deinen Ilias-Kursen mit nur einem Klick herunter.
 
 :heavy_check_mark: Konfiguriert für Ilias der FH-Aachen
 
+:heavy_check_mark: Supports Ilias 5, 6 & 7! 
+
 ## Supported Universities
 - FH Aachen
 - Uni Köln
+- Uni Konstanz
 
 [Deine Uni fehlt? Hier ist eine Anleitung!](#meine-uni-ist-nicht-dabei-was-nun)
 
