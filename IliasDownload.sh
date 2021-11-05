@@ -167,12 +167,12 @@ function fetch_exc {
 		touch "$HISTORY_FILE"
 	fi
 	local HISTORY_CONTENT=`cat "$HISTORY_FILE"`
-	
+
 	echo "Fetching exc $1 to $2"
 
-	local CONTENT_PAGE=`ilias_request "ilias.php?ref_id=$1&target=$1&cmd=showOverview&cmdClass=ilobjexercisegui&cmdNode=b8:md&baseClass=ilexercisehandlergui"`
-    
-    # Fetch all Download Buttons from this page
+	local CONTENT_PAGE=`ilias_request "goto_${ILIAS_PREFIX}_exc_$1.html"`
+
+	# Fetch all Download Buttons from this page
 	local ITEMS=`echo "$CONTENT_PAGE" | do_grep "<a href=\"\K[^\"]*(?=\">Download)" | sed -e 's/\&amp\;/\&/g'` 
     
     for file in $ITEMS ; do
