@@ -8,7 +8,7 @@ Lade die Dateien aus deinen Ilias-Kursen mit nur einem Klick herunter.
 
 :heavy_check_mark: Download von Dateien
 
-:heavy_check_mark: Download von Übungsaufgaben
+:heavy_check_mark: Download von Übungsaufgaben (Abgabeübungen)
 
 :heavy_check_mark: Bei Datei-Aktualisierungen im Ilias wird die lokale Kopie umbenannt & die Datei erneut heruntergeladen.
 
@@ -109,7 +109,7 @@ Ein bekanntes Problem entsteht durch zulange Dateinamen. Der Dateiname inklusive
 - Animation erstellen, die Funktionsweise des Scripts zeigt.
 - Passwort nicht im Skript hinterlegen, sondern mit Eingabeaufforderung. 
 - Falls gewünscht, Nutzername und Passwort in `.credentials` Datei abspeichern.
-- Herunterladen der Übungsaufgaben (`_lm_<id>.html`) (Sowie Links aus den Übungsaufgaben)
+- Herunterladen der Übungsaufgaben (Übungsbücher `_lm_<id>.html`) (Sowie Links aus den Übungsaufgaben)
 - Anzahl der heruntergeladenenen/fehlgeschlagenenen Dateien korrigieren. (Aufgrund der parallelen Downloads falsch.)
 - Herunterladen von verlinkten Videos
 - Verknüpfung "Online anzeigen" erstellen
