@@ -173,7 +173,7 @@ function fetch_exc {
 	local CONTENT_PAGE=`ilias_request "goto_${ILIAS_PREFIX}_exc_$1.html"`
 
 	# Fetch all Download Buttons from this page
-	local ITEMS=`echo "$CONTENT_PAGE" | do_grep "<a href=\"\K[^\"]*(?=\">Download)" | sed -e 's/\&amp\;/\&/g'` 
+	local ITEMS=`echo "$CONTENT_PAGE" | do_grep "<a href=\"\K[^\"]*(?=\">$ILIAS_EXC_BUTTON_DESC)" | sed -e 's/\&amp\;/\&/g'` 
     
     for file in $ITEMS ; do
 		local DO_DOWNLOAD=1
