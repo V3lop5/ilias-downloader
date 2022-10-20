@@ -22,6 +22,7 @@ Lade die Dateien aus deinen Ilias-Kursen mit nur einem Klick herunter.
 - FH Aachen
 - Uni Köln
 - Uni Konstanz
+- Uni Stuttgart
 
 [Deine Uni fehlt? Hier ist eine Anleitung!](#meine-uni-ist-nicht-dabei-was-nun)
 
