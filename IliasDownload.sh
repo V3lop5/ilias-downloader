@@ -24,7 +24,7 @@ if [ -z "$COOKIE_PATH" ] ; then
 fi
 
 # Load env-variables from config
-. ./.config
+. .config
 
 # .config example:
 #   ILIAS_URL="https://www.ili.fh-aachen.de/"
